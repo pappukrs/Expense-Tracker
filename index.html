@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+
+        *{
+            padding:0;
+            margin:0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color:#fff;
+            font-family: sans-serif;
+        }
+        body>#top-text{
+            color:rgb(59,93,164);
+            text-decoration: underline;
+            font-size:40px;
+            font-weight:700;
+            text-align: center;
+            padding:30px;
+            margin:15px;
+        }
+
+        .dataFill{
+            height:auto;
+            width:auto;
+            margin-left:450px;
+            margin-right:350px;
+            padding:30px;
+
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+        }
+
+        .input-width{
+            width:300px;
+            height:40px;
+        }
+    
+        .submit-cmp{
+            background-color: blue;
+            color:white;
+            padding:20px;
+            font-size:20px;
+            border-radius:10px;
+            margin-top:20px;
+            margin-left:10px;
+            text-align:center;
+
+        }
+    
+
+
+        #container{
+            display:grid;
+            margin-left:300px;
+            margin-right:300px;
+            margin-top:40px;
+            grid-template-columns: repeat(4,1fr);
+            gap:10px;
+
+        }
+        #container>div{
+         width:auto;
+         height:auto;
+
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+
+        #container>div>h2{
+         font-size:30px;
+         color:blue;
+         padding:8px;
+         margin:3px;
+        }
+
+        #container>div>p{
+            font-size:20px;
+            padding:8px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="top-text">Expense Tracker</h1>
+
+
+    <div class="dataFill">
+
+    <form>
+        <h2>Select Month</h2>
+        <select id="month" class="input-width">
+            <option value="select">select</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+        <h2>Income</h2>
+        <input type="number" placeholder="Enter Income" id="income" class="input-width">
+        <h2>Expense</h2>
+        <input type="number" placeholder="enter expense" id="expense" class="input-width">
+        <h2></h2>
+        <input type="submit" value="SUBMIT" class="input-width submit-cmp">
+    </form>
+
+</div>
+    <div id="container">
+
+    </div>
+</body>
+<script>
+ document.querySelector("form").addEventListener("submit",addDATA);
+ 
+   var arr=[];
+   
+    
+ function addDATA(){
+  event.preventDefault();
+
+ var obj={
+ month:document.querySelector("#month").value,
+  income:document.querySelector("#income").value,
+  expense:document.querySelector("#expense").value,
+
+ }
+ arr.push(obj);
+
+//  use of local storage
+ localStorage.setItem("arr",JSON.stringify(arr));
+ var ar=JSON.parse(localStorage.getItem("arr"))
+  displayDATA(ar);
+
+ }
+
+ function displayDATA(arr){
+  arr.forEach(function(data){
+
+ var container=document.querySelector("#container");
+//  container.innerText="";
+  var card=document.createElement("div");
+  var mon=document.createElement("h2");
+  mon.innerText=data.month;
+   
+  var inc=document.createElement("p");
+  inc.innerText="The income is "+data.income;
+
+  var exp=document.createElement("p");
+  exp.innerText="The Expense is "+data.expense;
+
+  var sav=document.createElement("p");
+  sav.innerText="The Saving is"+parseInt(data.income)-parseInt(data.expense);
+  card.append(mon,inc,exp,sav);
+ container.append(card);
+  
+  });
+ }
+
+
+</script>
+</html>
